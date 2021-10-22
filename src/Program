@@ -1,0 +1,335 @@
+#include <MatrixMini.h>
+#define IN1PIN 5
+#define EN1PIN 6
+#define far_Green 13
+#define far_Red 12
+#define close_Green 11
+#define close_Red 10
+
+int Far_Block_Code = 0, Close_Block_Code = 0, Last_Far_Block_Code = 0, Departure_Time, Start_Area, Spin_Direction,
+    Block_X, Block_Size, Turn_Dis, Pixy2_Block_Size, Shun_Block_X, inverse_Block_X, Block_Count, time_reset;
+int power = 65;//設定馬力
+long US_Filter_Last_Error, Compass_Error, Compass_Error_Last, US_Last_Error;
+long Servo_Middle = 90, pixy2_Servo = 102, Dodag_Turn_Angle = 20;
+float CP_Kp = -0.6, CP_Kd = -2;
+
+//羅盤數值設定
+int Compass[2][4] = {
+  {273, 350, 74, 176},//順時針羅盤數值
+  {270, 183, 75, 346}//逆時針羅盤數值
+};
+
+//轉彎時根據不同積木設定牆壁偵測距離
+int US_Dis_Turn[2][3] = {//依據遠距離積木做調整
+  {65, 75, 65},//順時針[無積木, 紅色積木, 綠色積木]
+  {65, 55, 75} //逆時針[無積木, 紅色積木, 綠色積木]
+};
+
+//設定轉彎後直走的時間設定
+long Turn_Go_Time[2][3] = {//依據近距離積木做調整
+  {200, 70, 270},//順時針[無積木, 紅色積木, 綠色積木]
+  {200, 300, 250} //逆時針[無積木, 紅色積木, 綠色積木]
+};
+long Pixy2_Servo_Angle[2] = {3, - 3};//[順時針,逆時針]
+
+void setup() {
+  Serial.begin(115200);
+  Mini.begin();
+  pinMode(close_Green, OUTPUT);
+  pinMode(close_Red, OUTPUT);
+  pinMode(far_Green, OUTPUT);
+  pinMode(far_Red, OUTPUT);
+  Mini.I2C1.PIXYcam.pixyinit(6);
+  Mini.RC1.set(Servo_Middle);
+  Mini.RC2.set(pixy2_Servo);
+  digitalWrite(close_Green, LOW);
+  digitalWrite(close_Red, LOW);
+  digitalWrite(far_Green, LOW);
+  digitalWrite(far_Red, LOW);
+}
+
+void loop() {
+  long Time_Reset = millis();
+  bool Mode = false;
+  while ((Mini.BTN1.get() == 1 || Mini.BTN2.get() == 1) && Mode == false) {
+    Mode = millis() - Time_Reset > 1000;
+  }
+  if (Mode == true)
+  {
+    while (1) {
+      Pixy2_Block_Size = 650;//積木的面積大小
+      Shun_Block_X = 200;//積木的X軸座標(順時針)
+      inverse_Block_X = 100;//積木的X軸座標(逆時針)
+      Mini.I2C1.PIXYcam.getblock(0, 1);
+      Block_Count = Mini.I2C1.PIXYcam.getCountofBlock();
+      Block_Switch_Logic(Block_Count);
+      LED_On();
+    }
+  }
+  Start_Decide();
+  //出發區時所設定的數值
+  Departure_Time = 400;//超音波不做偵測的時間
+  Pixy2_Block_Size = 2000;//積木的面積大小
+  Shun_Block_X = 200;//積木的X軸座標(順時針)
+  inverse_Block_X = 100;//積木的X軸座標(逆時針)
+  for (int i = 0; i < 12; i++) {
+    long US_Go_Error = 100, Time_Reset = millis();
+    Compass_Error = 100;
+    Compass_Error_Last = 0;
+    Block_Count = 0;
+    while (US_Go_Error > US_Dis_Turn[Spin_Direction][0] && Block_Count == 0 || abs(Compass_Error) > 10) {
+      Mini.I2C1.PIXYcam.getblock(0, 1);
+      Block_Count = Mini.I2C1.PIXYcam.getCountofBlock();
+      if (millis() - Time_Reset <  Departure_Time) {
+        US_Go_Error = 100;
+        US_Last_Error = Mini.D2.US.get();
+      } else {
+        US_Go_Error = US_Filter();
+      }
+      Compass_Error = Compass_Heading(Compass[Spin_Direction][Start_Area]);
+      long Output = Compass_Error * CP_Kp + (Compass_Error - Compass_Error_Last) * CP_Kd;
+      long Servo_Angle = constrain(Servo_Middle - Output, Servo_Middle - 20, Servo_Middle + 20);
+      Mini.RC1.set(Servo_Angle);
+      Compass_Error_Last = Compass_Error;
+    }
+    Block_Switch_Logic(Block_Count);
+    LED_On();
+    Serial.print("Block_Count:"); Serial.println(Block_Count);
+    Serial.print("Close:"); Serial.println(Close_Block_Code);
+    Serial.print("Far:"); Serial.println(Far_Block_Code / 3);
+    Dogde();
+    Start_Area++;
+    if (Start_Area >= 4) {
+      Start_Area = 0;
+    }
+    Mini.RC2.set(pixy2_Servo - Pixy2_Servo_Angle[Spin_Direction]);
+    Turn(25);
+    Last_Far_Block_Code = Far_Block_Code / 3;//紀錄最遠積木的編號
+    Serial.print("US:"); Serial.println(Mini.D2.US.get());
+    //離開出發區後所設定的數值
+    Departure_Time = 1000;//超音波不做偵測的時間
+    Pixy2_Block_Size = 650;//積木的面積大小
+    Shun_Block_X = 200;//積木的X軸座標(順時針)
+    inverse_Block_X = 100;//積木的X軸座標(逆時針)
+  }
+  Compass_PD_Time(500, Start_Area, 20);
+  digitalWrite(IN1PIN, LOW);
+  analogWrite(EN1PIN, LOW);
+  while (1) {
+    delay(100);
+  }
+}
+
+void Block_Switch_Logic(int Block_Count) {
+  Mini.I2C1.PIXYcam.getblock(0, 1);
+  if (Block_Count == 0) {
+    Serial.println("ZERO");
+    Far_Block_Code = 0;
+    Close_Block_Code = 0;
+  } else if (Block_Count == 1) {
+    Serial.println("ONE");
+    long Block_Size = Mini.I2C1.PIXYcam.block.width * Mini.I2C1.PIXYcam.block.height;
+    long Block_X =  Mini.I2C1.PIXYcam.block.x;
+    Serial.println("Block_Size"); Serial.println(Block_Size);
+    Serial.print("Block_X"); Serial.println(Block_X);
+    if (Block_Size >  Pixy2_Block_Size) {
+      Far_Block_Code = 0;
+      Close_Block_Code = Mini.I2C1.PIXYcam.block.signature;
+    } else {
+      if ((Block_X < Shun_Block_X && Spin_Direction == 0) || (Block_X > inverse_Block_X && Spin_Direction == 1)) {
+        Far_Block_Code = 0;
+        Close_Block_Code = Mini.I2C1.PIXYcam.block.signature;
+      } else {
+        Far_Block_Code = Mini.I2C1.PIXYcam.block.signature * 3;
+        Close_Block_Code = 0;
+      }
+    }
+  } else if (Block_Count == 2) {
+    Serial.println("TWO");
+
+    Mini.I2C1.PIXYcam.getblock(0, 1);
+    Close_Block_Code = Mini.I2C1.PIXYcam.block.signature;
+    Mini.I2C1.PIXYcam.getblock(0, 2);
+    Far_Block_Code = Mini.I2C1.PIXYcam.block.signature * 3;
+  }
+}
+
+void To_No_Block() {
+  int Block_Count_last = 100;
+  Compass_Error_Last = Compass_Heading(Compass[Spin_Direction][Start_Area]);
+  while (Block_Count_last > Block_Count - 1) {
+    Mini.I2C1.PIXYcam.getblock(0, 1);
+    Block_Count_last = Mini.I2C1.PIXYcam.getCountofBlock();
+    Compass_Error = Compass_Heading(Compass[Spin_Direction][Start_Area]);
+    long Output = Compass_Error * CP_Kp + (Compass_Error - Compass_Error_Last) * CP_Kd;
+    long Servo_Angle = constrain(Servo_Middle - Output, Servo_Middle - 20, Servo_Middle + 20);
+    Mini.RC1.set(Servo_Angle);
+    Compass_Error_Last = Compass_Error;
+  }
+}
+
+void Dogde() {
+  if (Close_Block_Code == 0 || Close_Block_Code ==  Last_Far_Block_Code) {//判斷近距離積木編號是否等於0(沒有積木)或是近距離積木與上一次積木相同
+    Serial.println("不閃避");
+    if ( Close_Block_Code ==  Last_Far_Block_Code && Last_Far_Block_Code != 0) {
+      To_No_Block();
+    } else {
+
+    }
+  } else if (Close_Block_Code == 1) {
+    Serial.println("閃避");
+    Mini.RC1.set(Servo_Middle + Dodag_Turn_Angle);
+    delay(300);
+    To_No_Block();
+  } else if (Close_Block_Code == 2) {
+    Serial.println("閃避");
+    Mini.RC1.set(Servo_Middle - Dodag_Turn_Angle);
+    delay(300);
+    To_No_Block();
+  }
+  Serial.println("直走偵測");
+  Turn_Dis = US_Dis_Turn[Spin_Direction][Far_Block_Code / 3];
+  Compass_PD_US(Turn_Dis, Start_Area, 20);
+}
+
+void Turn(int MaxTurn) {
+  Serial.println("轉彎");
+  Serial.print("Turn_Dis:"); Serial.println(Turn_Dis);
+  //===========================================================
+  long Servo_Angle;
+  if (Spin_Direction == 0) {
+    Servo_Angle = Servo_Middle + MaxTurn;
+  } else {
+    Servo_Angle = Servo_Middle - MaxTurn;
+  }
+  Mini.RC1.set(Servo_Angle);
+  Compass_Error = 100;
+  Compass_Error_Last = 0;
+  while (abs(Compass_Error) > 15) {
+    Compass_Error = Compass_Heading(Compass[Spin_Direction][Start_Area]);
+  }
+  Compass_Error = 100;
+  Compass_Error_Last = 0;
+  while (abs(Compass_Error) > 10) {
+    Compass_Error = Compass_Heading(Compass[Spin_Direction][Start_Area]);
+    long Output = Compass_Error * CP_Kp + (Compass_Error - Compass_Error_Last) * CP_Kd;
+    long Servo_Angle = constrain(Servo_Middle - Output, Servo_Middle - MaxTurn, Servo_Middle + MaxTurn);
+    Mini.RC1.set(Servo_Angle);
+    Compass_Error_Last = Compass_Error;
+
+  }
+  Compass_PD_Time(Turn_Go_Time[Spin_Direction][Close_Block_Code], Start_Area, 20);
+}
+
+
+int Compass_Heading(int Direction) {
+  int Error = Direction - Mini.I2C2.HTcompass.getHeading() + 180;
+  if (Error >= 0) {
+    return Error % 359 - 180;
+  } else {
+    return (359 - (-1 - Error) % 360) - 180;
+  }
+}
+
+void Compass_PD_US(int US_Target, int CP_Count, int MaxTurn) {
+  Compass_Error = 100;
+  Compass_Error_Last = 0;
+  US_Filter_Last_Error = Mini.D2.US.get();
+  long US_Error = 100;
+  while (US_Error > US_Target || abs(Compass_Error) > 10 ) {
+    Compass_Error = Compass_Heading(Compass[Spin_Direction][CP_Count]);
+    US_Error = US_Filter();
+    long Output = Compass_Error * CP_Kp + (Compass_Error - Compass_Error_Last) * CP_Kd;
+    long Servo_Angle = constrain(Servo_Middle - Output, Servo_Middle - MaxTurn, Servo_Middle + MaxTurn);
+    Mini.RC1.set(Servo_Angle);
+    Compass_Error_Last = Compass_Error;
+  }
+}
+
+void Compass_PD_Time(int times, int CP_Count, int MaxTurn) {
+  Serial.print("time:"); Serial.println(times);
+  Compass_Error_Last = 0;
+  long Time_Reset = millis();
+  while (millis() - Time_Reset < times) {
+    Compass_Error = Compass_Heading(Compass[Spin_Direction][CP_Count]);
+    long Output = Compass_Error * CP_Kp + (Compass_Error - Compass_Error_Last) * CP_Kd;
+    long Servo_Angle = constrain(Servo_Middle - Output, Servo_Middle - MaxTurn, Servo_Middle + MaxTurn);
+    Mini.RC1.set(Servo_Angle);
+    Compass_Error_Last = Compass_Error;
+  }
+}
+
+int US_Filter() {
+  int Dis;
+  long US_Filter_Error = Mini.D2.US.get();
+  if (US_Filter_Error < 0) {
+    Dis = US_Filter_Last_Error;
+  } else if (abs(US_Filter_Last_Error - US_Filter_Error) > 20) {
+    Dis = US_Filter_Last_Error;
+    US_Filter_Last_Error = US_Filter_Error;
+  } else {
+    Dis = US_Filter_Error;
+    US_Filter_Last_Error = US_Filter_Error;
+  }
+  return Dis;
+}
+
+void Start_Decide() {
+  US_Last_Error = Mini.D2.US.get();
+  while (Mini.BTN1.get() == 0 && Mini.BTN2.get() == 0) {
+    Mini.I2C1.PIXYcam.getblock(0, 1);
+    Serial.print("US2："); Serial.println(US_Filter());
+    Serial.print("Compass："); Serial.println(Mini.I2C2.HTcompass.getHeading());
+    Serial.print("Blcok_Count:"); Serial.println(Mini.I2C1.PIXYcam.getCountofBlock());
+    Serial.print("Size:"); Serial.println(Mini.I2C1.PIXYcam.block.width * Mini.I2C1.PIXYcam.block.height);
+    Serial.print("X:"); Serial.println(Mini.I2C1.PIXYcam.block.x);
+    Serial.println("=================================");
+    delay(100);
+  }
+  Serial.println("==========================");
+  if (Mini.BTN1.get() == 1) {
+    Spin_Direction = 0;
+    Mini.RC2.set(pixy2_Servo - 5);
+    Serial.println("順時針");
+  } else {
+    Spin_Direction = 1;
+    Mini.RC2.set(pixy2_Servo + 8);
+    Serial.println("逆時針");
+  }
+  for (int i = 0; i < 4; i++) {
+    Start_Area = i;
+    if (abs(Compass_Heading(Compass[Spin_Direction][i])) < 20) {
+      break;
+    }
+  }
+  Serial.print("第"); Serial.print(Start_Area); Serial.println("開始區");
+  delay(300);
+  int Power = map(power, 0, 100 , 0, 255);
+  digitalWrite(IN1PIN, HIGH);
+  analogWrite(EN1PIN, Power);
+}
+
+void LED_On() {
+  if (Close_Block_Code == 0) {
+    digitalWrite(close_Green, LOW);
+    digitalWrite(close_Red, LOW);
+  } else if (Close_Block_Code == 1) {
+    digitalWrite(close_Green, LOW);
+    digitalWrite(close_Red, HIGH);
+  } else if (Close_Block_Code == 2) {
+    digitalWrite(close_Green, HIGH);
+    digitalWrite(close_Red, LOW);
+  }
+  //===========================
+  if (Far_Block_Code == 0) {
+    digitalWrite(far_Green, LOW);
+    digitalWrite(far_Red, LOW);
+  } else if (Far_Block_Code == 3) {
+    Serial.println("Yes");
+    digitalWrite(far_Green, LOW);
+    digitalWrite(far_Red, HIGH);
+  } else if (Far_Block_Code == 6) {
+    digitalWrite(far_Green, HIGH);
+    digitalWrite(far_Red, LOW);
+  }
+}
