@@ -236,3 +236,39 @@ Contents:
 Today, we are participating in the International Conference. We have found that Darby's product numbers are very high. There is no direct communication from car manufacturers.
 
 ![jghgf](https://user-images.githubusercontent.com/90759989/138539625-06437212-3c75-4875-9baf-61cb4121b6de.jpg)
+## Components：
+(1) Pixy2 Camera
+
+![il](https://user-images.githubusercontent.com/90759989/138540920-d17f85e7-f1d5-42c3-9cd5-e4e3102110d9.png)
+
+(2) Uitrasound Sensor
+
+![sgd](https://user-images.githubusercontent.com/90759989/138540958-dc212284-a655-44b6-b83e-ca9bcb2897cb.png)
+
+(3) Compass Sensor
+
+![fdgdfgd](https://user-images.githubusercontent.com/90759989/138540970-308a0047-926c-4873-85e3-53933d4fe094.png)
+
+(4) LED Model
+
+![gdfgdfgdgfdgd](https://user-images.githubusercontent.com/90759989/138540975-4afe208a-547d-4d02-994e-fd64cc97b0f4.png)
+
+(5) Motor Driver Module
+
+![fghfgh](https://user-images.githubusercontent.com/90759989/138541221-e8a16b0b-f40b-49c3-b258-501f1dff6571.png)
+
+(6)Move Motor
+
+![retete](https://user-images.githubusercontent.com/90759989/138541230-21a00dad-f638-4886-8304-26319c5003a4.png)
+
+(7) Servo Motor
+
+![gfhfhfhf](https://user-images.githubusercontent.com/90759989/138541241-d6aa856b-0112-41a6-915b-d98100083da3.png)
+
+(8) Lithium Battery
+
+![ghfn](https://user-images.githubusercontent.com/90759989/138541260-29915fc6-a8b9-429d-9e5c-71de467d49fb.png)
+
+## Programming
+
+![螢幕擷取畫面 2021-10-23 115726](https://user-images.githubusercontent.com/90759989/138541691-db45eb4e-644a-447c-b9dd-ea40771ebc1c.png)
