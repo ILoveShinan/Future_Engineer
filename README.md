@@ -24,6 +24,9 @@ Lithium Battery：Supply motor and motherboard power.
 
 We read the Chinese rules and discussed the length and width limitations of the organisation.We began to discuss the sensors and design and manufacture of the organisation, how to use only one DC motor and how to make the steering structure.
 
+![0701](https://user-images.githubusercontent.com/90759989/139269592-8343a4ec-5189-4d41-baaa-e339d9e8f33b.jpg)
+![0701-2](https://user-images.githubusercontent.com/90759989/139269608-909ae42c-89fa-4771-94a4-5c4c47a3199a.jpg)
+
 **Record Date：2021.7.4**
 
 **Members：LIAO,YI-AN、LIN,CHING-PIN**
@@ -32,6 +35,8 @@ We read the Chinese rules and discussed the length and width limitations of the 
 
 We use the rigid Matrix Mini metal kit and the easy-to-fit Lego parts manufacturing mechanism.We use the upper half of the base plate mechanism to build the Matrix Mini metal kit.
 
+![0704](https://user-images.githubusercontent.com/90759989/139269781-67b1520e-a74f-4c46-85a2-9810e30611f0.jpg)
+![0704-2](https://user-images.githubusercontent.com/90759989/139269761-fb3cdd70-d8bc-45f5-80ff-b842559b14f6.jpg)
 
 **Record Date：2021.7.5**
 
@@ -57,6 +62,9 @@ After the actual test, we found that the battery could easily come off the vehic
 
 We're going to plan an ultrasound sensor on a car, use it to leave somewhere, know if it needs to be, and then it's going to flip over because of its position, so we're going to flip it early and late, so we're going to multi-position it.
 
+![0709](https://user-images.githubusercontent.com/90759989/139269949-9fc6d5f0-2db3-4b61-b657-af387a1e1f7e.jpg)
+![0709-2](https://user-images.githubusercontent.com/90759989/139269934-6603258e-2cd9-4525-a49a-870247d7634f.jpg)
+
 **Record Date：2021.7.13**
 
 **Members：LIAO,YI-AN、LIN,CHING-PIN**
@@ -64,6 +72,9 @@ We're going to plan an ultrasound sensor on a car, use it to leave somewhere, kn
 **Content：**
 
 We're going to plan an ultrasound sensor on a car, use it to leave somewhere, know if it needs to be, and then it's going to flip over because of its position, so we're going to flip it early and late, so we're going to multi-position it.
+
+![0713](https://user-images.githubusercontent.com/90759989/139270091-4bae4f9f-9eb0-424f-a86e-17dd5ee9a0c5.jpg)
+![0713-2](https://user-images.githubusercontent.com/90759989/139270111-2101cf39-ec94-4f85-9c76-de948faae12b.jpg)
 
 **Record Date：2021.7.15**
 
@@ -73,6 +84,9 @@ We're going to plan an ultrasound sensor on a car, use it to leave somewhere, kn
 
 In order to keep the model in a straight line, we have found that the error in the values of the model in a specific area can be too large for the model to walk in a straight line. Attaching the model to a height can improve the accuracy of the model.
 
+![0715](https://user-images.githubusercontent.com/90759989/139271877-470c512f-229e-46cd-92e6-0b3ccca7f5fb.jpg)
+![0715-2](https://user-images.githubusercontent.com/90759989/139271895-3545d3bd-df46-4e0d-9220-fa372f4147f6.jpg)
+
 **Record Date：2021.7.17**
 
 **Members：LIAO,YI-AN、LIN,CHING-PIN**
@@ -80,6 +94,8 @@ In order to keep the model in a straight line, we have found that the error in t
 **Content：**
 
 Although the EDT sensor has been installed in a higher position, sometimes the error value is still a bit large in the field. When we encounter this problem, we think that we can reduce the error value of the EDT in the field by using EDT correction.
+
+![0717](https://user-images.githubusercontent.com/90759989/139271998-22b7c22e-26c4-4e21-a2ce-24db1e3178dc.jpg)
 
 **Record Date：2021.8.5**
 
