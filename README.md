@@ -113,6 +113,9 @@ Today, we install the Pixy2 image recognition module on the vehicle and the vehi
 
 Today, we use Pixy2 image recognition team to recognize the color of blocks and dodge blocks. In order to distinguish the distance from the distance, we use Y coordinates to judge the distance from the near blocks.
 
+![0812](https://user-images.githubusercontent.com/90759989/139277080-b467d4a6-a89c-4b29-9beb-ae46d701636f.png)
+![0812-2](https://user-images.githubusercontent.com/90759989/139277096-c8490703-5d12-46fa-8c75-f61349b84599.png)
+
 **Record Date：2021.8.13**
 
 **Members：LIAO,YI-AN、LIN,CHING-PIN**
@@ -120,6 +123,9 @@ Today, we use Pixy2 image recognition team to recognize the color of blocks and 
 **Content：**
 
 We made LED lamp module and installed it in the rear of the organization. Since Pixy2 video recognition module cannot display the image recognition results immediately, we used homemade LED lamp module to indicate the result detected by Pixy2 video recognition module.
+
+![0813](https://user-images.githubusercontent.com/90759989/139277193-b88e9798-7765-4ba5-b63f-215572ef2b45.jpg)
+![0813-2](https://user-images.githubusercontent.com/90759989/139277227-5affd7bf-07b3-4f5c-a0fb-7590ba84db0e.jpg)
 
 **Record Date：2021.8.15**
 
@@ -129,6 +135,8 @@ We made LED lamp module and installed it in the rear of the organization. Since 
 
 To test whether the Lego motor is faster than the original drive motor and the steering is better than the servo motor, we have made a car out of Lego today. The base of the Lego vehicle follows the original vehicle design.
 
+![0815](https://user-images.githubusercontent.com/90759989/139277261-65c0478e-385b-4bbb-88f3-0d1eadad8beb.jpg)
+
 **Record Date：2021.8.16**
 
 **Members：LIAO,YI-AN、LIN,CHING-PIN**
@@ -136,6 +144,8 @@ To test whether the Lego motor is faster than the original drive motor and the s
 **Content：**
 
 Today we're going to put the Pixie2 image identification group on EV3 and EV3 will be able to get information from the Pixie2 image identification group, establishing that EV3 can fit with the Pixie2 image identification group, and EV3 can avoid congestion.
+
+![0816](https://user-images.githubusercontent.com/90759989/139277340-a7e6c2a8-07ba-4470-9e32-d8d3d96c2abd.jpg)
 
 **Record Date：2021.8.20**
 
@@ -161,6 +171,8 @@ On actual testing, we found that although the Pixy2 image recognition module cou
 
 After the test, we found that the Pixy2 image recognition module was exposed when installing the wide-angle mirror, so we took the wide-angle mirror, but the next traffic sign could not be detected.
 
+![0823](https://user-images.githubusercontent.com/90759989/139277388-c263a50b-9e7f-4852-b322-feb13132532b.png)
+
 **Record Date：2021.8.24**
 
 **Members：LIAO,YI-AN、LIN,CHING-PIN**
@@ -168,6 +180,9 @@ After the test, we found that the Pixy2 image recognition module was exposed whe
 **Content：**
 
 In order for us to detect the next object, maybe we'll decide on the mirror and jump to the specified angle so that the pixy2 image can be detected.
+
+![0824](https://user-images.githubusercontent.com/90759989/139277437-b0d83c0e-d73c-4e71-bd68-d13c09944ff3.jpg)
+![0824-2](https://user-images.githubusercontent.com/90759989/139277457-7a813db0-d9f0-49b2-acdd-4e1f4d7fca60.jpg)
 
 **Record Date：2021.8.27**
 
@@ -177,6 +192,8 @@ In order for us to detect the next object, maybe we'll decide on the mirror and 
 
 Today, we re-pick up the wire and wrap the welds in a heat shrink jacket to avoid the risk of damaging the electronic components and connecting the positive and negative poles with other people when installing batteries.
 
+![0827](https://user-images.githubusercontent.com/90759989/139277498-1a717a90-47b9-44c3-ae7c-e3a0672809de.jpg)
+
 **Record Date：2021.8.28**
 
 **Members：LIAO,YI-AN、LIN,CHING-PIN**
@@ -184,6 +201,8 @@ Today, we re-pick up the wire and wrap the welds in a heat shrink jacket to avoi
 **Content：**
 
 This line, which is always used by 10 lines, will be open and will be used by us not only by telephone but also by telephone calls, will be able to find faster to divide and increase efficiency.
+
+![0828](https://user-images.githubusercontent.com/90759989/139277533-4af69d84-c3cc-464b-9fdc-3241f59b2d11.jpg)
 
 **Record Date：2021.8.30**
 
@@ -193,6 +212,9 @@ This line, which is always used by 10 lines, will be open and will be used by us
 
 We found a problem that sometimes didn't have a counterpart because when the control board went on, the LED was supposed to be light, but it didn't, and we couldn't find the problem why it was.
 
+![0830](https://user-images.githubusercontent.com/90759989/139277572-b228253a-ecf6-40f7-969a-c4117fb6b2df.jpg)
+![0830-2](https://user-images.githubusercontent.com/90759989/139277581-e6ae098f-9263-415c-b721-54e913ae6007.jpg)
+
 **Record Date：2021.8.31**
 
 **Members：LIAO,YI-AN、LIN,CHING-PIN**
@@ -200,6 +222,8 @@ We found a problem that sometimes didn't have a counterpart because when the con
 **Content：**
 
 Since we practice constantly until the battery is dead and slow down, we attach a low voltage alarm to the battery to find out how much the battery is charged. When the battery is dead, a low voltage alarm will sound an alarm to inform you that the battery is dead.
+
+![0831](https://user-images.githubusercontent.com/90759989/139277620-6aa498a1-bd0c-4a9d-881e-46bb6057b3b0.jpg)
 
 **Record Date：2021.9.2**
 
@@ -209,6 +233,8 @@ Since we practice constantly until the battery is dead and slow down, we attach 
 
 Today we started writing a three-turn program that uses ultrasound to detect when the vehicle is about to turn and to keep the vehicle in a straight line. These two sensors are used to drive the vehicle three times, but the program does not recognize the traffic signs.
 
+![0902](https://user-images.githubusercontent.com/90759989/139277673-a24d208e-8398-42b8-8600-ac35a1e7cd92.png)
+
 **Record Date：2021.9.5**
 
 **Members：LIAO,YI-AN、LIN,CHING-PIN**
@@ -217,6 +243,8 @@ Today we started writing a three-turn program that uses ultrasound to detect whe
 
 Today we are going to run the three-turn program to add the traffic sign recognition program, but this program needs to turn the vehicle to the middle of the course. If it does not reach the middle of the course, it will make a bad decision.
 
+![0905](https://user-images.githubusercontent.com/90759989/139277701-cab0eec1-1fa3-4130-bac2-24f5f52c9911.png)
+
 **Record Date：2021.9.12**
 
 **Members：LIAO,YI-AN、LIN,CHING-PIN**
@@ -224,3 +252,5 @@ Today we are going to run the three-turn program to add the traffic sign recogni
 **Content：**
 
 Today, we are participating in the International Conference. We have found that Darby's product numbers are very high. There is no direct communication from car manufacturers.
+
+![0912](https://user-images.githubusercontent.com/90759989/139277760-69efe095-4165-4241-b0a2-61bce25e5179.jpg)
