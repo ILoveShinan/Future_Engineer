@@ -1,4 +1,4 @@
-# electronic components presentation
+## electronic components presentation
 
 The vehicle is consists of Compass Sensor,Matrix Mini controller,LEM Mode,Motor Driver Module,Move Motor,Servo Motor,Lithium Battery
 
@@ -16,7 +16,7 @@ Servo Motor：Control the mechanism to make the vehicle turn and Control the dir
 
 Lithium Battery：Supply motor and motherboard power.
 
-# Engineering log
+## Engineering log
 
 **Record Date：2021.7.1**
 
