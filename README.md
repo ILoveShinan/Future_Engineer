@@ -2,6 +2,8 @@
 
 ![249304967_410024187459107_6178602597014720771_n](https://user-images.githubusercontent.com/90759989/139564715-5a5840f0-33ad-404a-a6cb-aa91fc848bb0.jpg)
 
+Autonomous driving video：https://www.youtube.com/watch?v=a5rj4Xyn4FA&ab_channel=MaterLiao
+
 ## electronic components presentation
 
 The vehicle is consists of Compass Sensor,Matrix Mini controller,LEM Mode,Motor Driver Module,Move Motor,Servo Motor,Lithium Battery
