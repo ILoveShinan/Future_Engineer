@@ -1,3 +1,7 @@
+![247988701_914255779524777_4298965452330529198_n](https://user-images.githubusercontent.com/90759989/139564713-111d6bd9-dd5c-4703-bc05-c747ecc251e2.jpg)
+
+![249304967_410024187459107_6178602597014720771_n](https://user-images.githubusercontent.com/90759989/139564715-5a5840f0-33ad-404a-a6cb-aa91fc848bb0.jpg)
+
 ## electronic components presentation
 
 The vehicle is consists of Compass Sensor,Matrix Mini controller,LEM Mode,Motor Driver Module,Move Motor,Servo Motor,Lithium Battery
