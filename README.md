@@ -1,3 +1,5 @@
+# electronic components presentation
+
 The vehicle is consists of Compass Sensor,Matrix Mini controller,LEM Mode,Motor Driver Module,Move Motor,Servo Motor,Lithium Battery
 
 Compass Sensor：Detect the vehicle's magnetic field azimuth value to control the vehicle to avoid deviating from the lane.
